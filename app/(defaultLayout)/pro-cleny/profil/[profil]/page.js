@@ -60,14 +60,3 @@ const links = [
         </main>
     )
 }
-export function getStaticPaths() {
-  
-
-}
-export function getStaticProps({params}) {
-    return {
-        props: {
-            id: params?.profil
-        }
-    }
-}
