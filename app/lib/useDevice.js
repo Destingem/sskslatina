@@ -1,8 +1,12 @@
+"use client"
 import useViewportSize from "@mantine/core"
-export default function useDevice(width) {
-
+export default function isDevice() {
+    if (typeof window == "undefined") {return}
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const width = window.innerWidth
     let mobile = width < 768;
     let tablet = !mobile && width < 1024;
+  
     if(mobile){
         return "m"
     } else if(tablet){
@@ -12,6 +16,11 @@ export default function useDevice(width) {
     } else {
         return "la"
     }
+   
 
    
 }
+
+
+
+export const device = isDevice()

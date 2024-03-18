@@ -16,7 +16,7 @@ export default function SectionHeader({children,mainText, btnText, btnLink,subti
            {btnText && btnLink && <AllButton style={device !== "m" ? {} : {padding: "2vh 2vw"}} href={btnLink}>{btnText}</AllButton>}
         
             </div>
-            {device !== "m" && children && <Text>{children}</Text>}
+            {device !== "m" && children && <Text size="xl" style={{marginTop: "2vh"}}>{children}</Text>}
        </div>
     )
 }

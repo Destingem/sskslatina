@@ -6,6 +6,12 @@ import { env } from "./env.mjs"
  * @type {import('next').NextConfig}
  */
 const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
+  images: {
+    remotePatterns: [
+      {protocol: "http", hostname:"38.242.151.80", port: "1340"}
+
+    ]
+  },
   reactStrictMode: true,
   experimental: { instrumentationHook: true },
   rewrites() {

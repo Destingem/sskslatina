@@ -1,3 +1,4 @@
+"use client"
 import SectionHeader from "../../components/Universal/SectionHeader";
 export default function Sport({device, id}){
     return(

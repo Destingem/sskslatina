@@ -1,3 +1,4 @@
+"use client"
 import { Accordion, Container, Title } from '@mantine/core';
 import SectionHeader from "../../components/Universal/SectionHeader";
 let classes = {}
