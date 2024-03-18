@@ -4,7 +4,7 @@ import { Card, Grid, SimpleGrid, Text, ThemeIcon } from "@mantine/core"
 import Link from "next/link";
 import { IoHome } from "react-icons/io5";
 import { CgArrowLongRight } from "react-icons/cg";
-export const meta = {}
+
 
 const links = [
     {

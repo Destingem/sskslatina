@@ -6,7 +6,7 @@ import { useViewportSize } from '@mantine/hooks'
 import useDevice from 'app/lib/useDevice'
 import SectionHeader from 'app/components/Universal/SectionHeader'
 import { Carousel } from '@mantine/carousel'
-export const meta = {}
+
 
 export default function Blog(p){
     const news = [

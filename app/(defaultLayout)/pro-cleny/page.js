@@ -112,7 +112,7 @@ const profiles = [
       href: "/o-nas/strelci/",
     },*/
   ]
-export const meta = {}
+
 export default function ProCleny(p){
 
 

@@ -1,5 +1,5 @@
 import HeroSection from '/app/components/Universal/HeroSection.js'
-export const meta = {}
+
 
 export default function NasiStrelci(p){
 

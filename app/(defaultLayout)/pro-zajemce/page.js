@@ -12,7 +12,7 @@ import FAQ from "./FAQ"
 import CTA from "./CTA"
 import { useViewportSize } from '@mantine/hooks'
 import { device } from 'app/lib/useDevice'
-export const meta = {}
+
 async function getData() {
   const toFetch = [
     {name: "strelnice", furl: "strelnices?populate=*"}

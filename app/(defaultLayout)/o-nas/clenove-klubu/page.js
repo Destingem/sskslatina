@@ -5,7 +5,7 @@ import useDevice from "app/lib/useDevice"
 import Vedeni from "./Vedeni"
 import Treneri from "./Treneri"
 import Clenove from "./Clenove"
-export const meta = {}
+
 const vedeni = [
   {
     img: "/images/shooters/1.jpg",

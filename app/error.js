@@ -6,7 +6,7 @@ import { IoHome } from "react-icons/io5";
 import { CgArrowLongRight } from "react-icons/cg";
 import { useEffect, useState } from "react";
 
-export const meta = {}
+
 
 const links = [
     {
