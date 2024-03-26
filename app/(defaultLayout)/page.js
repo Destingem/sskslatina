@@ -37,7 +37,7 @@ async function getData() {
     }
   };
 
-  // Iterate over the toFetch array to perform fetch operations
+  // Iterate over the toFetch array to perform fetch operationss
   for (let item of toFetch) {
     const {name, furl} = item;
     try {
