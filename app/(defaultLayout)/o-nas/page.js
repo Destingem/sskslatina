@@ -12,8 +12,8 @@ import OurShooters from "./OurShooters"
 import { useViewportSize } from "@mantine/hooks"
 import useDevice from "app/lib/useDevice"
 export default function Onas(p) {
-    const {width} = useViewportSize();
-    const device = useDevice(width)
+ 
+    const device = useDevice()
   const links = [
     {
       label: "Úvod",
@@ -51,7 +51,7 @@ export default function Onas(p) {
   return (
     <main>
       <HeroSection name="O nás" links={links}>
-        Najdete zde soutěží pořádaných SSK Slatina Brno. <br /> Registrovat se můžete jednoduše po rozkliknutí soutěže.
+        Kdo jsme a co děláme, to se dozvíte níže.
       </HeroSection>
     <div style={{padding: "4vh 5vw", display: "flex", flexDirection: "column", gap: "5vh"}}>
    <Uvod id="uvod" device={device} />

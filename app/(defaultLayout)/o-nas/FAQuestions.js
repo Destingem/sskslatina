@@ -29,7 +29,7 @@ const placeholder =
 export default function FAQuestions({id}) {
   return (
     <section id={id} size="xl" style={{width: "100%"}}>
-      <SectionHeader mainText="FAQ" subtitle="Často kladenéí dotazy"></SectionHeader>
+      <SectionHeader mainText="FAQ" subtitle="Často kladené dotazy"></SectionHeader>
 
       <Accordion variant="separated">
     {FAQitems?.map(({question, answer}, index)=> {

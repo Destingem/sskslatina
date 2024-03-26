@@ -1,23 +1,18 @@
+"use client"
 import { SimpleGrid } from "@mantine/core";
 import SectionHeader from "../Universal/SectionHeader";
 import ShooterCard from "../Universal/ShooterCard";
+import { Carousel } from "@mantine/carousel";
 
-const shooters = [
-    {img: "/images/shooters/1.jpg", name: "Petr Novák", position: "Předseda", categories: ["VzPi 40", "VzPu 40", "VzPi 60", "VzPu 60"], href: "/o-nas/strelci/petr-novak"},
-    {img: "/images/shooters/1.jpg", name: "Petr Novák", position: "Předseda", categories: ["VzPi 40", "VzPu 40", "VzPi 60", "VzPu 60"], href: "/o-nas/strelci/petr-novak"},
-    {img: "/images/shooters/1.jpg", name: "Petr Novák", position: "Předseda", categories: ["VzPi 40", "VzPu 40", "VzPi 60", "VzPu 60"], href: "/o-nas/strelci/petr-novak"},
-    {img: "/images/shooters/1.jpg", name: "Petr Novák", position: "Předseda", categories: ["VzPi 40", "VzPu 40", "VzPi 60", "VzPu 60"], href: "/o-nas/strelci/petr-novak"},
-    {img: "/images/shooters/1.jpg", name: "Petr Novák", position: "Předseda", categories: ["VzPi 40", "VzPu 40", "VzPi 60", "VzPu 60"], href: "/o-nas/strelci/petr-novak"},
-    
-]
-export default function Shooters({device}){
+
+export default function Shooters({device, nasiClenove}){
 
     return(
         <section style={{padding: "2vh 5vw"}}>
-               <SectionHeader subtitle={"Kdo nás reprezentuje"} mainText="Naši střelci" btnText={"Všichni střelci"} btnLink={"/o-nas/strelci"}></SectionHeader>
-               <SimpleGrid cols={device === "m" ? 1 : 5} spacing="lg">
-                {shooters?.map((shooter, index) => <ShooterCard key={index} {...shooter} device={device} />)}
-               </SimpleGrid>
+               <SectionHeader subtitle={"Kdo nás reprezentuje"} mainText="Naši střelci" btnText={"Všichni naši střelci"} btnLink={"/o-nas/nasi-strelci"}></SectionHeader>
+               <Carousel slideSize={device !== "m" ? "20%" : "100%"}  slideGap={"lg"} align="start">
+                {nasiClenove?.map((shooter, index) => <Carousel.Slide key={index}><ShooterCard key={index} {...shooter} device={device} ic={"#12b886"}  /></Carousel.Slide>)}
+               </Carousel>
         </section>
     )
 }

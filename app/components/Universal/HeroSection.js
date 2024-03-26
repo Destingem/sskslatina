@@ -25,7 +25,7 @@ export default function HeroSection({name, children, links}){
             let secondHalf = links.slice(half, links.length);
             newsLinks = [firstHalf, secondHalf]
         }
-        console.log(newsLinks)
+  
         for(let link in newsLinks[0]+ 1){
             if(newsLinks[0][link]){
                 finalLinks.push(newsLinks[0][link])
@@ -65,7 +65,7 @@ export default function HeroSection({name, children, links}){
    if(device !== "m"){
     return(
         <section style={{width: "100%", backgroundColor: "#FBFBFB", minHeight: "40vh", padding: "5vh 10vw", display: "flex", justifyContent: "space-between"}}>
-            <div style={{maxWidth: "40%", display: "flex", flexDirection: "column", gap: "3vh"}}>
+            <div style={{maxWidth: "70%", display: "flex", flexDirection: "column", gap: "3vh"}}>
             <Title order={1} size={rem(66)}>{name}</Title>
             <Divider color={"#F76767"} size={"xl"} />
             
@@ -84,7 +84,7 @@ export default function HeroSection({name, children, links}){
     return(
         <section style={{width: "100%", backgroundColor: "#FBFBFB", minHeight: "40vh", padding: "5vh 10vw", display: "flex", flexDirection: "column", gap: "5vh"}}>
             <div style={{ display: "flex", flexDirection: "column", gap: "3vh"}}>
-            <Title order={1} size={rem(66)}>{name}</Title>
+            <Title order={1} size={rem(56)}>{name}</Title>
             <Divider color={"#F76767"} size={"xl"} />
             
             <Text lh={"175%"} size={rem(20)}>{children}</Text>

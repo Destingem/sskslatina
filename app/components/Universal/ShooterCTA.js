@@ -1,3 +1,4 @@
+"use client"
 import { Text, Title, TextInput, Button, Image, ButtonGroup } from '@mantine/core';
 import image from '/public/images/universal/shooters.jpeg';
 import classes from "/styles/ShooterCTA.module.css";

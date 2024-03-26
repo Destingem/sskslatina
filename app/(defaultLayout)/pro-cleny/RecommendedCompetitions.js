@@ -1,4 +1,5 @@
 
+"use client"
 import SectionHeader from "../../components/Universal/SectionHeader";
 
 import { useState } from 'react';
@@ -122,7 +123,7 @@ export default function RecommendedCompetitions({id, profiles, device}) {
   return (
     <section id={id} style={{maxWidth: "100%"}}>
     <SectionHeader mainText="Doporučené závody" subtitle="Závody, kterých byste se měli zúčastnit"></SectionHeader>
-    <ScrollAreaAutosize style={{maxHeight: "90vh"}}>
+    <ScrollAreaAutosize style={device !== "m" ? {maxHeight: "90vh", maxWidth: "100vw"} : {maxHeight: "70vh", maxWidth: "100vw"}}>
       <TextInput
         placeholder="Search by any field"
         mb="md"

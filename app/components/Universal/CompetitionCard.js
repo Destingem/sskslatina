@@ -1,29 +1,27 @@
-import { ActionIcon, Badge, Button, ButtonGroup, Chip, Group, Text, Title, Tooltip } from "@mantine/core"
+
+"use client"
+import { ActionIcon, Badge, Button, ButtonGroup, Chip, Group, Space, Text, Title, Tooltip } from "@mantine/core"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 import { MdLocationOn, MdDateRange } from "react-icons/md"
+import generateCalendarLink from "../../lib/generateCalendarLink"
+import formatSlug from "app/lib/formatSlug"
+export default function CompetitionCard({ device, name, categories, location, date, desc,  discipliny, attributes, id}) {
 
-export default function CompetitionCard({ device, name, categories, location, date, desc, href }) {
   const router = useRouter()
   function redirect() {
     router.push(href)
   }
-  let calendarLink = () => {
-    const dateFormat = (dateStr) => dateStr.replace(/-/g, "") + "T000000Z"
-
-    let calLink = "https://www.google.com/calendar/render?action=TEMPLATE"
-
-    calLink += "&text=" + encodeURIComponent(name)
-    calLink += "&dates=" + dateFormat(date?.from)
-    calLink += "/" + dateFormat(date?.to)
-    calLink +=
-      "&details=" + encodeURIComponent(desc + " \nPodrobnosti o závodu najdete na: " + "www.sskslatina.cz" + href)
-    calLink += "&location=" + encodeURIComponent(location?.name + ", " + location?.adress + "\n Mapa: " + location?.url)
-
-    return calLink
-  }
-  calendarLink = calendarLink()
+  const href = "/souteze/" + formatSlug(name + "-" + id)
+  var ended = false
+  const competitionDate = new Date(attributes?.termin_do).getTime()
+  const dateNow = new Date().getTime()
+ 
+  if(competitionDate < dateNow || attributes?.ukoncen == true){
+     ended = true
+}
+  let calendarLink = generateCalendarLink({name, date, location, desc, href})
   const dateFrom = new Date(date?.from).toLocaleDateString("cs-CZ", {
     weekday: "long",
     year: "numeric",
@@ -36,6 +34,8 @@ export default function CompetitionCard({ device, name, categories, location, da
     month: "long",
     day: "numeric",
   })
+
+  const registrerLink = href + "#registrace"
   if (device == "m") {
     return (
      <div>
@@ -59,7 +59,7 @@ export default function CompetitionCard({ device, name, categories, location, da
           </div>
 
           <div style={{ display: "flex",  marginTop: "2vh", width: "100%", gap: "4vw", flexWrap: "wrap" }}>
-            {categories?.map((category, index) => {
+            {discipliny?.map((category, index) => {
               let borderRadius = ""
               if (index == 0) {
                 borderRadius = "0 6rem 6rem 0"
@@ -67,12 +67,28 @@ export default function CompetitionCard({ device, name, categories, location, da
                 borderRadius = "6rem 0 0 6rem"
               }
               return (
-                <Badge size="lg" key={index} color="teal" style={{ borderRadius: borderRadius }}>
+                <Badge size="sm" key={index} color="teal" style={{ borderRadius: borderRadius }}>
                   {category}
                 </Badge>
               )
             })}
+           
           </div>
+          <div style={{ display: "flex",  marginTop: "2vh", width: "100%", gap: "4vw", flexWrap: "wrap" }}>
+          {categories?.map((category, index) => {
+              let borderRadius = ""
+              if (index == 0) {
+                borderRadius = "0 6rem 6rem 0"
+              } else if (index == categories.length - 1) {
+                borderRadius = "6rem 0 0 6rem"
+              }
+              return (
+                <Badge size="sm" key={index} color="cyan" style={{ borderRadius: borderRadius }}>
+                  {category}
+                </Badge>
+              )
+            })}
+            </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "2vh", padding: "2vh 0", alignItems: "center" }}>
@@ -85,7 +101,7 @@ export default function CompetitionCard({ device, name, categories, location, da
                 {location?.name + ", " + location?.adress}
               </Text>
             </div>
-            <Link href={location?.url}>
+            <Link href={location?.url} target="_blank">
               {" "}
               <Text c={"#B40C04"} size="lg" fw={700}>
                 MAPA
@@ -102,7 +118,7 @@ export default function CompetitionCard({ device, name, categories, location, da
                 {dateFrom + " - " + dateTo}
               </Text>
             </div>
-            <Link href={calendarLink}>
+            <Link href={calendarLink ? calendarLink : ""} target="_blank">
               {" "}
               <Text c={"#B40C04"} size="lg" fw={700}>
                 KALENDÁŘ
@@ -112,24 +128,25 @@ export default function CompetitionCard({ device, name, categories, location, da
           <Text p={"0 0.5vw"} lh={"175%"} size="xl" fw={400}>
             {desc}
           </Text>
-          
+          {ended ? <Text c={"#B40C04"} size="xl" fw={800}>ZÁVOD JE JIŽ UKONČEN</Text> : ""}
         </div>
-      
+        
       </div>
-      <ButtonGroup style={{width: "100%"}}>
-            <Button
-              onClick={() => {
-                redirect("a" + href + "#registrace")
-              }}
-              type="s"
-              size="xl"
-              variant="filled"
-              color="green"
-              radius="0"
-              style={{width: "100%"}}
-            >
-              Registrace
-            </Button>
+   
+     <ButtonGroup style={{width: "100%"}}>
+           {!ended ?  <Button
+             
+             type="s"
+             size="xl"
+             variant="filled"
+             color="green"
+             radius="0"
+             style={{width: "100%"}}
+             component="a"
+             href={registrerLink}
+           >
+             Registrace
+           </Button> : ""}
             <Button
               onClick={() => {
                 redirect(href)
@@ -144,6 +161,8 @@ export default function CompetitionCard({ device, name, categories, location, da
               Více
             </Button>
           </ButtonGroup>
+         
+
      </div>
     )
   } else {
@@ -157,8 +176,8 @@ export default function CompetitionCard({ device, name, categories, location, da
             <Title order={2} size={24}>
               {name}
             </Title>
-            <div style={{ display: "flex", gap: "0.5vw" }}>
-              {categories?.map((category, index) => {
+            <div style={{ display: "flex", gap: "0.5vw", flexWrap: "wrap" }}>
+              {discipliny?.map((category, index) => {
                 let borderRadius = ""
                 if (index == 0) {
                   borderRadius = "0 6rem 6rem 0"
@@ -167,6 +186,22 @@ export default function CompetitionCard({ device, name, categories, location, da
                 }
                 return (
                   <Badge key={index} color="teal" style={{ borderRadius: borderRadius }}>
+                    {category}
+                  </Badge>
+                )
+              })}
+            </div>
+            <Space h="1vh" />
+            <div style={{  display: "flex", gap: "0.5vw", flexWrap: "wrap"}}>
+              {categories?.map((category, index) => {
+                let borderRadius = ""
+                if (index == 0) {
+                  borderRadius = "0 6rem 6rem 0"
+                } else if (index == categories.length - 1) {
+                  borderRadius = "6rem 0 0 6rem"
+                }
+                return (
+                  <Badge key={index} color="cyan" style={{ borderRadius: borderRadius }}>
                     {category}
                   </Badge>
                 )
@@ -194,7 +229,7 @@ export default function CompetitionCard({ device, name, categories, location, da
                 {location?.name + ", " + location?.adress}
               </Text>
             </div>
-            <Link href={location?.url}>
+            <Link href={location?.url} target="_blank">
               {" "}
               <Text c={"#B40C04"} size="lg" fw={700}>
                 MAPA
@@ -211,7 +246,7 @@ export default function CompetitionCard({ device, name, categories, location, da
                 {dateFrom + " - " + dateTo}
               </Text>
             </div>
-            <Link href={calendarLink}>
+            <Link href={calendarLink ? calendarLink : ""} target="_blank">
               {" "}
               <Text c={"#B40C04"} size="lg" fw={700}>
                 KALENDÁŘ
@@ -221,11 +256,12 @@ export default function CompetitionCard({ device, name, categories, location, da
           <Text p={"0 0.5vw"} lh={"175%"} size="xl" fw={400}>
             {desc}
           </Text>
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <ButtonGroup>
+            {!ended ? <Link href={registrerLink}>
             <Button
-              onClick={() => {
-                redirect("a" + href + "#registrace")
-              }}
+             
+             
               type="s"
               size="lg"
               variant="filled"
@@ -234,10 +270,10 @@ export default function CompetitionCard({ device, name, categories, location, da
             >
               Registrace
             </Button>
+            </Link> : ""}
+            <Link href={href}>
             <Button
-              onClick={() => {
-                redirect(href)
-              }}
+             
               type="s"
               size="lg"
               variant="outline"
@@ -246,7 +282,10 @@ export default function CompetitionCard({ device, name, categories, location, da
             >
               Více o závodu{" "}
             </Button>
+            </Link>
           </ButtonGroup>
+          {ended ? <Text c={"#B40C04"} size="xl" fw={800}>ZÁVOD JE JIŽ UKONČEN</Text> : ""}
+          </div>
         </div>
       </div>
     )

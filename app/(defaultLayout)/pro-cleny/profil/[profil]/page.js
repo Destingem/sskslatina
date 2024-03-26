@@ -1,27 +1,66 @@
-"use client"
-import { useViewportSize } from "@mantine/hooks";
+
+
 import HeroSection from "../../../../components/Universal/HeroSection";
-import useDevice from "app/lib/useDevice";
+
 import Records from "./Records";
 import Sucesses from "./Sucesses";
 import Results from "./Results";
 import Stats from "./Stats";
-export default function Onas(p){
-const shooter = {
-    fName: "Petr",
-    lName: "Novák",
-    results: {
-        VzPu: {
-            40: [
-                {name: "Mistrovstí ČR", place: 1, date: "2022-09-01", total:412.7, polozky: [102.3, 103.2, 104.5, 103.2,], ct: 30, link: "/vysledky/mistrovstvi-cr/2022-09-01"},
-                {name: "Pohár SSK Slatina Brno", place: 3, date: "2022-09-01", total:410.7, polozky: [100.3, 101.2, 103.5, 103.2,], ct: 35, link: "/vysledky/mistrovstvi-cr/2022-09-01"},
-                {name: "Mistrovstí ČR", place: 1, date: "2022-09-01", total:412.7, polozky: [102.3, 103.2, 104.5, 103.2,], ct: 30, link: "/vysledky/mistrovstvi-cr/2022-09-01"},
-            ]
-        }
-    }
-}
-const { fName, lName } = shooter;
+import { device } from "app/lib/useDevice";
+import formatSlug from "app/lib/formatSlug";
+async function getData({ tofetch }) {
+  console.log("ToFetch: ", tofetch)
+  // URLs to fetch from
+  const apiBaseURL = "http://38.242.151.80:1340/api/"
+  var toFetch = [{ name: "blogs", furl: "blogs?populate=*" }]
+  if (Array.isArray(tofetch)) {
+    toFetch = tofetch
+  }
 
+  // Object to store fetched data
+  let fetchedData = {}
+
+  // Fetch options
+  let options = {
+    next: { revalidate: 10 },
+    method: "GET",
+    headers: {
+      "User-Agent": "insomnia/8.6.0",
+      Authorization: "Bearer " + process.env.STRAPI,
+    },
+  }
+
+  // Iterate over the toFetch array to perform fetch operations
+  for (let item of toFetch) {
+    const { name, furl } = item
+    try {
+      let url = apiBaseURL + furl
+      const response = await fetch(url, options)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${name}`)
+      }
+      const data = await response.json()
+      fetchedData[name] = data.data // Adjust based on your actual data structure
+    } catch (err) {
+      console.error(`Error fetching ${name}:`, err)
+      fetchedData[name] = [] // Default to empty array on error
+    }
+  }
+
+  return fetchedData
+}
+export async function generateStaticParams() {
+  const { blogs } = await getData({})
+  var slugs = blogs.map((blog, index) => {
+    return { blog: formatSlug(blog?.attributes?.nazev_prispevku) + "-" + blog?.id, id: blog?.id }
+  })
+  console.log(slugs)
+  return slugs
+}
+export default function Onas(p){
+
+let fName = "Jan"
+let lName = "Novák"
 const links = [
     {
       label: "Osobní rekordy",
@@ -44,12 +83,11 @@ const links = [
         desc: "Statistiky výkonnosti střelce v různých disciplínách",
       },
   ]
-  const { width } = useViewportSize()
-  const device = useDevice(width)
+
     return(
         <main>
         <HeroSection name={fName + " " + lName} links={links} >
-          Profil střelce
+          Tato funkcionalita bude dostupná v produkční verzi (při reálnném nasazení)
         </HeroSection>
         <div style={{ padding: "4vh 5vw", display: "flex", flexDirection: "column", gap: "5vh" }}>
             <Records id="rekordy" device={device} />

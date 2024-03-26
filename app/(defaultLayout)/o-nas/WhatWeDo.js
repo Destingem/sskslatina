@@ -2,7 +2,7 @@ import { Text, Title } from "@mantine/core";
 import SectionHeader from "app/components/Universal/SectionHeader";
 import Link from "next/link";
 
-export default function WhatWeDo({id}){
+export default function WhatWeDo({id, device}){
 function SubTitle({children}){
 
     return(
@@ -10,7 +10,7 @@ function SubTitle({children}){
     )
 }
     return(
-        <section id={id} style={{maxWidth: "50%"}}>
+        <section id={id} style={device !== "m" ? {maxWidth: "50%"} : {}}>
           <SectionHeader mainText="Co děláme" subtitle="Jaké disciplíny střílíme, kdo jsou naši střelci..."></SectionHeader>
           <Text size="lg" lh={"175%"}>Pellentesque massa venenatis leo proin elit. <br /> Facilisi consectetur magna viverra dolor faucibus venenatis magna amet arcu. Integer varius tincidunt et nunc mi ipsum at pellentesque. Cras iaculis in est elit. Sit purus vel eu aenean. 
           

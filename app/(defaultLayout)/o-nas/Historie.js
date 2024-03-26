@@ -3,7 +3,7 @@ import SectionHeader from "app/components/Universal/SectionHeader";
 import Image from "next/image";
 
 
-export default function Historie({id}){
+export default function Historie({id, device}){
 
     var history = [
         {
@@ -34,7 +34,8 @@ export default function Historie({id}){
             value: "2019"
         }
     ]
-    return(
+    if(device == "m"){
+      return(
         <section id={id}>
           <SectionHeader mainText="Historie" subtitle="Historie našeho klubu"></SectionHeader>
           <Tabs color="red" defaultValue={history[0]?.value}>
@@ -50,11 +51,11 @@ export default function Historie({id}){
 
    {history?.map((item, index)=> {
         return(
-            <Tabs.Panel key={index} value={item.value} style={{padding: "2vh 1vw", display: "flex"}} >
-      <div style={{maxWidth: "60%"}}>
+            <Tabs.Panel key={index} value={item.value} style={{padding: "2vh 1vw", display: "flex", flexDirection: "column"}} >
+      <div >
       {item.text}
       </div>
-      {item?.image && <div style={{position: "relative", height: "100%", width: "50%", height: "50vh"}}>
+      {item?.image && <div style={{position: "relative", height: "100%", width: "100%", height: "50vh"}}>
       <Image style={{objectFit: "cover"}} fill src={item.image} alt="Air rifle" />
       </div>}
         </Tabs.Panel>
@@ -64,6 +65,40 @@ export default function Historie({id}){
     </Tabs>
           </section>
     )
+}
+    
+   else{
+    return(
+      <section id={id}>
+        <SectionHeader mainText="Historie" subtitle="Historie našeho klubu"></SectionHeader>
+        <Tabs color="red" defaultValue={history[0]?.value}>
+    <Tabs.List>
+{history?.map((item, index)=> {
+      return(
+          <Tabs.Tab key={index} value={item.value} leftSection={item.icon} >
+          <Text>{item.label}</Text>
+      </Tabs.Tab>
+      )
+})}
+    </Tabs.List>
+
+ {history?.map((item, index)=> {
+      return(
+          <Tabs.Panel key={index} value={item.value} style={{padding: "2vh 1vw", display: "flex"}} >
+    <div style={{maxWidth: "60%"}}>
+    {item.text}
+    </div>
+    {item?.image && <div style={{position: "relative", height: "100%", width: "50%", height: "50vh"}}>
+    <Image style={{objectFit: "cover"}} fill src={item.image} alt="Air rifle" />
+    </div>}
+      </Tabs.Panel>
+      )
+
+ })}
+  </Tabs>
+        </section>
+  )
+   }
 }
 /*
        <Tabs.Tab value="gallery" leftSection={""}>

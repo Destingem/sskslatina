@@ -1,13 +1,15 @@
+"use client";
 import { Divider, Group, SimpleGrid, Text, Title } from "@mantine/core";
 import SectionHeader from "../../../../components/Universal/SectionHeader";
-export default function Records({id, device, }){
+import { device } from "app/lib/useDevice";
+export default function Records({id,  }){
 
     const columns = [{name: "Vzduchová puška", value: "VzPu", subColums: [{name: "VzPu 40", value: "VzPu 40"}, {name: "VzPu 60", value: "VzPu 60"}]}]
     return(
         <section id={id} style={{maxWidth: "100%"}}>
             <SectionHeader mainText="Osobní rekordy" subtitle="Nejlepší výsledky střelce v různých disciplínách"></SectionHeader>
             <SimpleGrid cols={device !== "m" ? 2 : 1} gap={20}>
-               {columns?.map((column, index)=> {
+               {device !== "m" && device !== undefined && columns?.map((column, index)=> {
 
                 return(
                     <div style={{backgroundColor: "#F1FDE6", padding: "2vh 0"}} key={index}>

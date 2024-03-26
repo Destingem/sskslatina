@@ -1,27 +1,44 @@
+"use client"
 import { ActionIcon, Badge, Button, ButtonGroup, Chip, Group, Text, Title, Tooltip } from "@mantine/core"
+import formatSlug from "app/lib/formatSlug"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 import { MdLocationOn, MdDateRange } from "react-icons/md"
 
-export default function NewsCard({ device, name, categories, date, desc, href, img, color }) {
+export default function NewsCard({ device, name, categories, date, desc,  img, color, id }) {
+  const href = "/blog/" + formatSlug(name + "-" + id)
+  const [fDate, setFDate] = useState("")
   const router = useRouter()
   function redirect() {
     router.push(href)
   }
   
-  const dateFrom = new Date(date?.from).toLocaleDateString("cs-CZ", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-  const dateTo = new Date(date?.to).toLocaleDateString("cs-CZ", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
+  function formatDateString(dateString) {
+    // Create a date object from the dateString
+    const date = new Date(dateString);
+  
+    // Check if the date is valid
+    if (isNaN(date)) {
+      console.error('Invalid Date');
+      return 'Invalid Date';
+    }
+  
+    const formattedDate = date.toLocaleDateString("cs-CZ", {
+      weekday: 'long', // e.g., pondělí
+      year: 'numeric', // e.g., 2024
+      month: 'long', // e.g., březen
+      day: 'numeric', // e.g., 14
+    });
+  
+    return formattedDate;
+  }
+
+ useEffect(()=> {
+    setFDate(formatDateString(date))
+ }, [date])
+
   if (device == "m") {
     return (
      <div>
@@ -53,16 +70,19 @@ export default function NewsCard({ device, name, categories, date, desc, href, i
                 borderRadius = "6rem 0 0 6rem"
               }
               return (
-               <Link key={category.href} href={category.href}>
+               <Link key={category?.attributes.value} href={category?.attributes.value}>
                <Badge size="lg" key={index} color="teal" style={{ borderRadius: borderRadius }}>
-                  {category.name}
+                  {category?.attributes.nazev}
                 </Badge>
                </Link>
               )
             })}
           </div>
+        
         </div>
+       
         <div style={{marginTop: "2vh", marginBottom: "2vh"}}>
+        <Text>{fDate}</Text>
        <Text p={"0 0.5vw"} lh={"175%"} size="xl" fw={400}>
             {desc}
           </Text>
@@ -92,7 +112,7 @@ export default function NewsCard({ device, name, categories, date, desc, href, i
             <Title order={2} size={24}>
               {name}
             </Title>
-            <div style={{ display: "flex", gap: "0.5vw" }}>
+            <div style={{ display: "flex", gap: "0.5vw", flexWrap: "wrap" }}>
               {categories?.map((category, index) => {
                 let borderRadius = ""
                 if (index == 0) {
@@ -101,14 +121,15 @@ export default function NewsCard({ device, name, categories, date, desc, href, i
                   borderRadius = "6rem 0 0 6rem"
                 }
                 return (
-                  <Link key={category.href} href={category.href}>
+                  <Link key={category?.attributes?.value} href={category?.attributes?.value ? category?.attributes?.value : "#"}>
                   <Badge key={index} color="teal" style={{ borderRadius: borderRadius }}>
-                    {category?.name}
+                    {category?.attributes?.nazev}
                   </Badge>
                   </Link>
                 )
               })}
             </div>
+            <Text>{fDate}</Text>
           </div>
 
           <Link href={href}>

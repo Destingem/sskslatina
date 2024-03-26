@@ -36,7 +36,7 @@ export default function NewsForMembers({id, device,}){
             {news?.map((competition, index) => {
 
                 return(
-                    <NewsCard {...competition} key={index} device={device} color="rgb(230, 253, 253)" />
+                    <NewsCard {...competition} key={index} device={device} color="rgb(230, 253, 253)"  id={competition.id} />
                 )
             })}
             </SimpleGrid>

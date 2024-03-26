@@ -1,4 +1,4 @@
-"use client"
+
 import { SimpleGrid } from '@mantine/core'
 import HeroSection from '/app/components/Universal/HeroSection.js'
 import NewsCard from "../../components/Universal/NewsCard"
@@ -6,166 +6,67 @@ import { useViewportSize } from '@mantine/hooks'
 import useDevice from 'app/lib/useDevice'
 import SectionHeader from 'app/components/Universal/SectionHeader'
 import { Carousel } from '@mantine/carousel'
-
-
-export default function Blog(p){
-    const news = [
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Ze závodů"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Provozní informace"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Tréninkové podklady"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Ze závodů"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Provozní informace"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Tréninkové podklady"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Ze závodů"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Provozní informace"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Tréninkové podklady"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Ze závodů"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Provozní informace"
-        },
-        {
-            name: "Nákup elektronických terčů",
-            date: "2022-09-01",
-            categories: [{name: "Vybavení", href: "/blog/vybaveni"}, {name: "Elektronické terče", href: "/blog/elektronicke-terce"}],
-            desc: "V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici. V rámci programu nová zelená cesta k úsporám máme možnost získat až 5 dalších elektronických terčů na naší střelnici.",
-            href: "/blog/nakup-elektronickych-tercu",
-            img: "/images/terce.jpg",
-            category: "Tréninkové podklady"
-        },
-    ]
-    let newsCategories = []
-    for(let item in news){
-        let i = news[item]
-        if(i?.category && !newsCategories.find(nc => nc?.name == i?.category)){
-            newsCategories.push({name: i?.category, items: []})
+import { device } from 'app/lib/useDevice'
+import Content from './Content'
+import Categories from './Categories'
+async function getData() {
+    // URLs to fetch from
+    const apiBaseURL = 'http://38.242.151.80:1340/api/';
+    const toFetch = [
+      {name: "blogs", furl: "blogs?populate=*"},
+      {name: "blogoveKategorie", furl: "blogove-kategories?populate=*"}
+    ];
+  
+    // Object to store fetched data
+    let fetchedData = {};
+  
+    // Fetch options
+    let options = {
+      method: 'GET',
+      headers: {
+        'User-Agent': 'insomnia/8.6.0',
+        Authorization: "Bearer " + process.env.STRAPI
+      }
+    };
+  
+    // Iterate over the toFetch array to perform fetch operations
+    for (let item of toFetch) {
+      const {name, furl} = item;
+      try {
+        let url = apiBaseURL + furl;
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${name}`);
         }
-        if(i?.category){
-            let index = newsCategories?.findIndex(category => category.name == i?.category)
-            newsCategories[index].items.push(i)
-        }
+        const data = await response.json();
+        fetchedData[name] = data.data; // Adjust based on your actual data structure
+      } catch (err) {
+        console.error(`Error fetching ${name}:`, err);
+        fetchedData[name] = []; // Default to empty array on error
+      }
     }
-    console.log(newsCategories)
-    const {width} = useViewportSize();
-    const device = useDevice(width)
-    return(
+  
+    return fetchedData;
+  }
+  
+  // Example usage within a Next.js page component
+  export default async function BlogPage() {
+    // Fetch the blog data and blog categories
+    const { blogs, blogoveKategorie } = await getData();
+  
+ 
+ 
+
+ 
+    return (
         <main>
-            <HeroSection name="Blog" >
-            Najdete zde soutěží pořádaných SSK Slatina Brno. Registrovat se můžete jednoduše po rozkliknutí soutěže.b
-            </HeroSection>
-            <div style={{padding: "4vh 5vw", display: "flex", flexDirection: "column", gap: "5vh"}}>
-         {newsCategories?.map((category, index)=> {
-
-            return(
-               <div key={index}>
-               <SectionHeader subtitle={""} mainText={category?.name} btnText={"Všechny příspěvky v kategorii " + category?.name} btnLink={"/zavody"}></SectionHeader>
-               <Carousel slideSize="33%"  align="start" slideGap="md" controlSize={33} loop withIndicators>
-            {category?.items?.map((competition, index) => {
-
-                return(
-                    <Carousel.Slide key={index}>
-                    <NewsCard {...competition} key={index} device={device} />
-                    </Carousel.Slide>
-                )
-            })}
-            </Carousel>
-               </div>
-            )
-         })}
-            <SimpleGrid cols={device !== "m" ? 3 : 1} gap={20}>
-            {news?.map((competition, index) => {
-
-                return(
-                    <NewsCard {...competition} key={index} device={device} />
-                )
-            })}
-            </SimpleGrid>
-            </div>
-        </main>
+        <HeroSection name="Blog">
+          Na naem blogu najdete aktuality, provozní informace a novinky ze závodů.
+        </HeroSection>
+        <Categories blogoveKategorie={blogoveKategorie} device={device} />
+        <Content blogs={blogs} blogoveKategorie={blogoveKategorie} device={device} />
+      
+      </main>
     )
 }
+

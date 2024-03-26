@@ -1,3 +1,4 @@
+"use client"
 import { SimpleGrid } from "@mantine/core";
 import SectionHeader from "../Universal/SectionHeader";
 import ItemCard from "../Universal/ItemCard";

@@ -46,9 +46,14 @@ import {header} from "/app/data/navData.js";
   export default function Header() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
    
-    const {width} = useViewportSize();
-    const theme = useMantineTheme(); 
+    function closeWithDelay(){
+      setTimeout(() => {
+        closeDrawer()
+      }, 500);
+    }
    
+    const theme = useMantineTheme(); 
+  
   const mainLinks = header?.desktop?.map(({label, path, items}, index) => {
 
     if(!items){
@@ -107,6 +112,7 @@ import {header} from "/app/data/navData.js";
           {links}
         </SimpleGrid>
 
+        {/*
         <div className={classes.dropdownFooter}>
           <Group justify="space-between">
             <div>
@@ -119,7 +125,7 @@ import {header} from "/app/data/navData.js";
             </div>
             <Button variant="default">Get started</Button>
           </Group>
-        </div>
+        </div> */}
       </HoverCard.Dropdown>
     </HoverCard>
     )
@@ -132,14 +138,14 @@ const mobileLinks = header?.desktop?.map(({label, path, items}, index) => {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   if(!items){
     return(
-      <Link href={path} key={path + label} className={classes.link} style={{whiteSpace: "nowrap"}}>
+      <Link href={path} key={path + label} className={classes.link} onClick={closeWithDelay} style={{whiteSpace: "nowrap"}}>
                 {label}
               </Link>
               )
   }
   const links = items.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
-   <Link href={path}>
+   <Link href={item?.path} onClick={closeWithDelay}>
    <Group wrap="nowrap" align="flex-start">
         <ThemeIcon size={34} variant="default" radius="md">
           <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
@@ -174,21 +180,21 @@ const mobileLinks = header?.desktop?.map(({label, path, items}, index) => {
   )
 });
 
-  const device = useDevice(width); // value can be "m", "t", "l"
+  const device = useDevice(); // value can be "m", "t", "l"
 
   
     return (
-      <Box pb={10} style={{zIndex: "2000", position: "sticky", top: 0}}>
-        <header className={classes.header}>
+      <Box pb={10} style={{zIndex: "2000", position: "sticky", top: 0,}}>
+        <header className={classes.header} style={{ backdropFilter: "blur(16px)"}}>
           <Grid justify="center"  h="100%" align="center">
          <Grid.Col span={3}>
-         <div style={{display: "flex", justifyContent: "left", alignItems: "center", gap: "1vw", }}>
+         <Link href="/" style={{display: "flex", justifyContent: "left", alignItems: "center", gap: "1vw", }}>
             <Image src={Logo} alt="Mantine logo" style={device !== "m" ? {objectFit: "contain", maxHeight: "5vh", maxWidth: "10%"} : {objectFit: "contain", maxHeight: "5vh",}} />
             <div>
               <Text style={{whiteSpace: "nowrap"}} fw={700}>SSK Slatina Brno</Text>
               <Text style={{whiteSpace: "nowrap"}} size="sm">Sportovně střelecký klub</Text>
             </div>
-            </div>
+            </Link>
          </Grid.Col>
               {/* Desktop device */}
               { device !== "m" && <Grid.Col span={6}  style={{ padding: "0"}}>
@@ -198,7 +204,7 @@ const mobileLinks = header?.desktop?.map(({label, path, items}, index) => {
           
               </Grid.Col>}
   {/* Desktop device */}
-<Grid.Col span={3}>
+<Grid.Col span={device == "m" ? 8 : 3} style={{alignItems: "center", display: "flex"}}>
 <Group visibleFrom="sm" style={{display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
 <Link href="/souteze">
                 
@@ -211,7 +217,7 @@ const mobileLinks = header?.desktop?.map(({label, path, items}, index) => {
              
             </Group>
   
-            <Burger style={{marginLeft: "auto", marginRight: "2vw", display: "flex", marginTop:"auto"}} opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
+            <Burger style={{marginLeft: "auto", marginRight: "0vw", display: "flex", marginTop:"1vh"}} opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
 </Grid.Col>
           </Grid>
         </header>

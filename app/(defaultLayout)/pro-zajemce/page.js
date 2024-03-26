@@ -129,7 +129,7 @@ console.log(data)
     return(
         <main>
             <HeroSection name="Pro zájemce" links={links}>
-            Najdete zde soutěží pořádaných SSK Slatina Brno. Registrovat se můžete jednoduše po rozkliknutí soutěže.
+            Zaujala vás sportovní střelba a rádi byste se dozvědeli více? Podívejte se na následující sekce.
             </HeroSection>
             <div style={{ padding: "4vh 5vw", display: "flex", flexDirection: "column", gap: "5vh" }}>
             <Onas id="news"  device={device} />
